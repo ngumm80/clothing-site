@@ -18,5 +18,21 @@ function App() {
     </div>
   );
 }
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductPage from "./pages/ProductPage"; // or wherever your file is
+import HomePage from "./pages/HomePage"; // optional placeholder
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product/american-flag-tee" element={<ProductPage />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
 
 export default App;
