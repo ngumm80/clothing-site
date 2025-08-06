@@ -1,4 +1,7 @@
-function App() {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductPage from "./pages/ProductPage";
+
+function HomePage() {
   return (
     <div className="relative w-screen h-screen">
       <img
@@ -18,9 +21,6 @@ function App() {
     </div>
   );
 }
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProductPage from "./pages/ProductPage"; // or wherever your file is
-import HomePage from "./pages/HomePage"; // optional placeholder
 
 function App() {
   return (
@@ -34,5 +34,3 @@ function App() {
 }
 
 export default App;
-
-
