@@ -30,7 +30,6 @@ function NavBar({ cartCount }) {
       </div>
     </nav>
   );
-}
 
 function HomePage() {
   return (
@@ -82,24 +81,35 @@ function ShopPage() {
   );
 }
 
-function ShirtBuilder({ onAddToCart }) {
+function ShirtBuilder() {
   const [color, setColor] = useState("Black");
-  const [style, setStyle] = useState("T-shirt");
-  const [size, setSize] = useState("M");
   const [logo, setLogo] = useState(logos[0]);
 
-  const baseImage = `/images/${style.toLowerCase()}-${color.toLowerCase()}.jpg`;
+  const baseImage = `/images/tshirt-${color.toLowerCase()}.jpg`;
 
-  const handleAddToCart = () => {
-    const item = {
-      id: Date.now(),
-      style,
-      color,
-      size,
-      logo,
-    };
-    onAddToCart(item);
-  };
+  return (
+    <div className="flex flex-col items-center justify-center h-screen gap-6">
+      <img src={baseImage} alt="Shirt" className="w-64 h-64 object-cover" />
+      <img src={logo.src} alt="Logo" className="w-32 absolute" />
+
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2 items-center">
+          <label>Shirt Color:</label>
+          <select value={color} onChange={(e) => setColor(e.target.value)} className="border p-1 rounded">
+            {shirtColors.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <label>Choose Logo:</label>
+          <select value={logo.name} onChange={(e) => setLogo(logos.find(l => l.name === e.target.value))} className="border p-1 rounded">
+            {logos.map(l => <option key={l.name} value={l.name}>{l.name}</option>)}
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
