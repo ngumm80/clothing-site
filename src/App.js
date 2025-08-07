@@ -82,7 +82,8 @@ function ShopPage() {
   );
 }
 
-function ShirtBuilder() {
+function ShirtBuilder({ onAddToCart }) {
+
   const [color, setColor] = useState("Black");
   const [logo, setLogo] = useState(logos[0]);
 
