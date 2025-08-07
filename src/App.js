@@ -49,15 +49,15 @@ function HomePage() {
 function ShopPage() {
   const products = [
     {
-      id: "american-flag-tee",
-      name: "American Flag Tee",
-      image: "/images/tshirt-black.jpg",
+      id: "Black Shirt",
+      name: "Black Shirt",
+      image: "/images/tanktop-black.jpg",
       price: 29.99,
     },
     {
-      id: "eagle-logo-hoodie",
-      name: "Eagle Logo Hoodie",
-      image: "/images/hoodie-black.jpg",
+      id: "Black Crop Top",
+      name: "Black Crop Top",
+      image: "/images/CropTop-black.jpg",
       price: 49.99,
     },
   ];
