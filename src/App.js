@@ -24,9 +24,7 @@ function NavBar({ cartCount }) {
         <Link to="/" className="hover:underline">Home</Link>
         <Link to="/shop" className="hover:underline">Shop</Link>
         <Link to="/builder" className="hover:underline">Design</Link>
-        <Link to="/cart" className="hover:underline">
-          Cart ({cartCount})
-        </Link>
+        <Link to="/cart" className="hover:underline">Cart ({cartCount})</Link>
       </div>
     </nav>
   );
@@ -69,7 +67,11 @@ function ShopPage() {
       <h1 className="text-3xl font-bold mb-6 text-center">Shop All Shirts</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product) => (
-          <Link to={`/product/${product.id}`} key={product.id} className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+          <Link
+            to={`/product/${product.id}`}
+            key={product.id}
+            className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+          >
             <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
             <div className="p-4">
               <h2 className="text-xl font-semibold">{product.name}</h2>
@@ -83,21 +85,23 @@ function ShopPage() {
 }
 
 function ShirtBuilder({ onAddToCart }) {
-
   const [color, setColor] = useState("Black");
+  const [style, setStyle] = useState("T-shirt");
+  const [size, setSize] = useState("M");
   const [logo, setLogo] = useState(logos[0]);
 
-  const baseImage = `/images/tshirt-${color.toLowerCase()}.jpg`;
+  const baseImage = `/images/${style.toLowerCase().replace(" ", "")}-${color.toLowerCase()}.jpg`;
 
-  // Add missing state and handler props
-  const [style, setStyle] = useState(shirtStyles[0]);
-  const [size, setSize] = useState(shirtSizes[0]);
-
-  // Accept onAddToCart as a prop
-  // eslint-disable-next-line
-  const handleAddToCart = typeof onAddToCart === "function"
-    ? () => onAddToCart({ style, color, size, logo })
-    : () => {};
+  const handleAdd = () => {
+    const item = {
+      id: Date.now(),
+      style,
+      color,
+      size,
+      logo,
+    };
+    onAddToCart(item);
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -112,7 +116,7 @@ function ShirtBuilder({ onAddToCart }) {
           <div>
             <label className="block font-medium mb-1">Style:</label>
             <select value={style} onChange={(e) => setStyle(e.target.value)} className="border p-2 rounded w-full">
-              {shirtStyles.map((s) => <option key={s} value={s}>{s}</option>)}
+              {shirtStyles.map((s) => <option key={s}>{s}</option>)}
             </select>
           </div>
 
@@ -120,7 +124,12 @@ function ShirtBuilder({ onAddToCart }) {
             <label className="block font-medium mb-1">Color:</label>
             <div className="flex gap-3">
               {shirtColors.map((c) => (
-                <button key={c} onClick={() => setColor(c)} className={`w-10 h-10 rounded-full border-2 ${color === c ? "border-black" : "border-gray-300"}`} style={{ backgroundColor: c.toLowerCase() }}></button>
+                <button
+                  key={c}
+                  onClick={() => setColor(c)}
+                  className={`w-10 h-10 rounded-full border-2 ${color === c ? "border-black" : "border-gray-300"}`}
+                  style={{ backgroundColor: c.toLowerCase() }}
+                />
               ))}
             </div>
           </div>
@@ -128,7 +137,7 @@ function ShirtBuilder({ onAddToCart }) {
           <div>
             <label className="block font-medium mb-1">Size:</label>
             <select value={size} onChange={(e) => setSize(e.target.value)} className="border p-2 rounded w-full">
-              {shirtSizes.map((s) => <option key={s} value={s}>{s}</option>)}
+              {shirtSizes.map((s) => <option key={s}>{s}</option>)}
             </select>
           </div>
 
@@ -136,12 +145,20 @@ function ShirtBuilder({ onAddToCart }) {
             <label className="block font-medium mb-1">Logo:</label>
             <div className="flex gap-4 flex-wrap">
               {logos.map((l) => (
-                <img key={l.name} src={l.src} alt={l.name} onClick={() => setLogo(l)} className={`w-16 h-16 object-contain cursor-pointer border-2 rounded ${logo.name === l.name ? "border-black" : "border-transparent"}`} />
+                <img
+                  key={l.name}
+                  src={l.src}
+                  alt={l.name}
+                  onClick={() => setLogo(l)}
+                  className={`w-16 h-16 object-contain cursor-pointer border-2 rounded ${logo.name === l.name ? "border-black" : "border-transparent"}`}
+                />
               ))}
             </div>
           </div>
 
-          <button onClick={handleAddToCart} className="mt-4 bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Add to Cart</button>
+          <button onClick={handleAdd} className="mt-4 bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
@@ -174,7 +191,7 @@ function App() {
   const [cart, setCart] = useState([]);
 
   const handleAddToCart = (item) => {
-    setCart((prev) => [...prev, item]);
+    setCart([...cart, item]);
   };
 
   return (
@@ -189,6 +206,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;
